@@ -1,6 +1,6 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
-const { User, Admin, Course } = require("../db");
+const { User, Admin, Course, Review } = require("../db");
 const { authenticateJWT, SECRETKEY } = require("../middleware/auth");
 
 const router = express.Router();
@@ -71,7 +71,24 @@ router.get("/courses/:id", async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 });
-
+//Add review
+router.post("/courses/:id/comment", authenticateJWT, async (req, res) => {
+  try {
+    const { comment, rating, username, avatar } = req.body;
+    const newReview = new Review({ username, rating, comment, avatar }) ;
+    const course = await Course.findById(req.params.id);
+    const user = await User.findOne({ username: req.user.username });
+    if (course && user) {
+      course.reviews.push(newReview);
+      await course.save();
+      res.status(201).json({ message: "Review added successfully!", review: newReview });
+    } else {
+      res.status(404).json({ message: "Please log in." });
+    }
+  } catch (error) {
+    res.status(500).json({ message: "An error occurred while adding the review." });
+  }
+});
 // Buy Course
 router.post("/courses/:id", authenticateJWT, async (req, res) => {
   const course = await Course.findById(req.params.id);
@@ -101,5 +118,6 @@ router.get("/purchasedCourses", authenticateJWT, async (req, res) => {
     res.status(403).json({ message: "User not found" });
   }
 });
+
 
 module.exports = router;

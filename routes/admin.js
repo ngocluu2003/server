@@ -1,6 +1,6 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
-const { User, Admin, Course } = require("../db");
+const { User, Admin, Course, Book, Review } = require("../db");
 const { authenticateJWT, SECRETKEY } = require("../middleware/auth");
 
 const router = express.Router();
@@ -47,6 +47,22 @@ router.post("/courses", authenticateJWT, async (req, res) => {
   res.json({ message: "Course created successfully", courseId: course.id });
 });
 
+// Add Books
+router.post("/courses/:id/add-book", authenticateJWT, async (req, res) => {
+  const courseId = req.params.id;
+  const { title, author, summary, image, link } = req.body;
+  const newBook = new Book({
+    title: title,
+    author: author,
+    summary: summary,
+    image: image,
+    link: link,
+  });
+  const course = await Course.findByIdAndUpdate(courseId);
+   course.books.push(newBook);
+  await course.save();
+  res.json({ message: "Book added successfully" });
+});
 // Update specific course
 router.put("/courses/:id", authenticateJWT, async (req, res) => {
   const course = await Course.findByIdAndUpdate(req.params.id, req.body, {

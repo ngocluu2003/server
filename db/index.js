@@ -12,17 +12,18 @@ const adminSchema = new mongoose.Schema({
   username: String,
   password: String,
 });
-const BookSchema = new mongoose.Schema({
-  title: String,
-  author: String,
-  summary: String,
-  image: String
-});
 const ReviewSchema = new mongoose.Schema({
   username: String,
   rating: Number,
   comment: String,
   avatar: String
+});
+const BookSchema = new mongoose.Schema({
+  title: String,
+  author: String,
+  summary: String,
+  image: String,
+  link: String
 });
 const courseSchema = new mongoose.Schema({
   title: String,
@@ -39,5 +40,6 @@ const courseSchema = new mongoose.Schema({
 const User = mongoose.model("User", userSchema);
 const Admin = mongoose.model("Admin", adminSchema);
 const Course = mongoose.model("Course", courseSchema);
-
-module.exports = { User, Admin, Course };
+const Book = mongoose.model("Books", BookSchema);
+const Review = mongoose.model("Review", ReviewSchema);
+module.exports = { User, Admin, Course, Book, Review };
