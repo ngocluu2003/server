@@ -9,7 +9,7 @@ const app = express();
 app.use(express.json());
 app.use("/admin", adminRouter);
 app.use("/users", userRouter);
-app.use(cors());
+app.use(cors({ origin: '*' }));
 
 // Connect Mongoose
 mongoose
