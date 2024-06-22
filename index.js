@@ -29,12 +29,9 @@ mongoose
 app.get("/", (req, res) => {
   res.send(
     `<h1 style="padding: 32px 120px; text-align: center; margin-top: 32px">
-      CourseX allows users to sign up, log in, explore a wide range of
-      courses, and make purchases.
+      Trang web cho phép người dùng đăng ký, đăng nhập, khám phá nhiều khóa học và mua sắm.
       <br />
-      The app also features an admin panel where
-      administrators can log in, sign up, create courses, and publish or keep
-      them unpublished.
+      Ứng dụng cũng có một bảng điều khiển quản trị, nơi các quản trị viên có thể đăng nhập, đăng ký, tạo khóa học, và xuất bản hoặc giữ chúng ở trạng thái chưa xuất bản.
     </h1>`
   );
 });
