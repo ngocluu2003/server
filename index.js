@@ -14,7 +14,7 @@ app.use("/users", userRouter);
 
 // Connect Mongoose
 mongoose
-  .connect(process.env.MONGODB_URI, {
+  .connect("mongodb+srv://luuxuanngoc2312:d7EjliBDJew9R67Y@cluster0.wuoiuao.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     dbName: "courses",
